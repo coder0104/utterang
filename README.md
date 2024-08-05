@@ -2,15 +2,11 @@
 
 A new Flutter project.
 
-## Getting Started
+## 프로젝트 진행현황
 
-This project is a starting point for a Flutter application.
+프로젝트 진행현황(어터티켓)
 
-A few resources to get you started if this is your first Flutter project:
+8월 5일 월요일
+- [공공데이터포털 openai 해양수산부_낚시 어선업 신고정보 불러오기]
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
