@@ -14,6 +14,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String selectedCity = '부산';
   List<BoatModel> boats = [];
   bool isLoading = false;
+  int maxPerson = 8;
 
   final Map<String, List<String>> provinceCities = {
     '부산': ['부산'],
@@ -34,7 +35,12 @@ class _HomeScreenState extends State<HomeScreen> {
       isLoading = true;
     });
 
-    boats = await ApiService.getBoatsByRegion(selectedProvince, selectedCity);
+    List<BoatModel> allBoats = await ApiService.getBoatsByRegion(selectedProvince, selectedCity);
+
+    // maxPerson 값을 기준으로 필터링
+    boats = allBoats.where((boat) {
+      return boat.maxperson <= maxPerson;
+    }).toList();
 
     setState(() {
       isLoading = false;
@@ -86,6 +92,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
               }).toList(),
             ),
+            Slider(
+              value: maxPerson.toDouble(),
+              min: 0,
+              max: 100,
+              divisions: 100,
+              label: maxPerson.toString(),
+              onChanged: (double value) {
+                setState(() {
+                  maxPerson = value.toInt();
+                });
+              },
+            ),
+            Text('Max Person: $maxPerson'),
             ElevatedButton(
               onPressed: isLoading ? null : fetchBoats,
               child: Text(isLoading ? 'Loading...' : 'Fetch Boats'),
@@ -93,15 +112,20 @@ class _HomeScreenState extends State<HomeScreen> {
             Expanded(
               child: isLoading
                   ? Center(child: CircularProgressIndicator())
-                  : ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: boats.length,
-                      itemBuilder: (context, index) {
-                        var boat = boats[index];
-                        return Text(boat.boatname);
-                      },
-                      separatorBuilder: (context, index) => SizedBox(width: 20),
-                    ),
+                  : boats.isEmpty
+                      ? Center(child: Text('검색결과가 없습니다'))
+                      : ListView.separated(
+                          scrollDirection: Axis.vertical,
+                          itemCount: boats.length,
+                          itemBuilder: (context, index) {
+                            var boat = boats[index];
+                            return ListTile(
+                              title: Text(boat.boatname),
+                              subtitle: Text('Location: ${boat.boatloca}, Max Person: ${boat.maxperson}'),
+                            );
+                          },
+                          separatorBuilder: (context, index) => SizedBox(height: 10),
+                        ),
             ),
           ],
         ),

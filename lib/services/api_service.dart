@@ -5,7 +5,7 @@ import 'package:publicdata/models/boat_model.dart';
 class ApiService {
   static const String baseUrl =
       "http://apis.data.go.kr/1192000/select0230List/getselect0230List?serviceKey=9IZyKdl19TjST2Cjq0YYi8XwbV%2BGTCOD3DE2XdT%2BTGHY9akOskrVLU28bT8AlUpk8%2B%2BHg2zE5PP3BntcMsiM6Q%3D%3D&type=json";
-  
+
   static const int numOfRows = 100;
 
   static const Map<String, Map<String, List<int>>> regionPages = {
@@ -115,7 +115,10 @@ class ApiService {
 
             for (var boat in boatList) {
               final instance = boat as Map<String, dynamic>;
-              boatInstances.add(BoatModel.fromJson(instance));
+              BoatModel boatModel = BoatModel.fromJson(instance);
+              if (boatModel.boatloca.contains(city)) {
+                boatInstances.add(boatModel);
+              }
             }
           } else {
             throw FormatException('Unexpected JSON format');
