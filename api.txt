@@ -2,3 +2,4 @@
 
 
 http://apis.data.go.kr/1192000/select0230List/getselect0230List?serviceKey=9IZyKdl19TjST2Cjq0YYi8XwbV%2BGTCOD3DE2XdT%2BTGHY9akOskrVLU28bT8AlUpk8%2B%2BHg2zE5PP3BntcMsiM6Q%3D%3D&pageNo=20&numOfRows=100
+
